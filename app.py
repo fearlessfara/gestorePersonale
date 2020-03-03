@@ -51,8 +51,8 @@ def inserisci_pattuglia():
     response_dict = {}
     content = request.get_json()
     inizio_turno = content['inizio_turno']
-    fine_turno = content['fineTurno']
-    data = content['dataTurno']
+    fine_turno = content['fine_turno']
+    data = content['giorno']
     primo_militare = content['primo_militare']
     secondo_militare = content['secondo_militare']
     targa = content['targa_veicolo']
