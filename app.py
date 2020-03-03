@@ -13,7 +13,7 @@ CORS(app)
 
 # definizione delle costanti
 
-STATUS = "STATUS"
+STATUS = "status"
 
 
 @app.route('/', methods=['GET'])
@@ -25,7 +25,7 @@ def home():
 def get():
     response_dict = {}
     content = request.get_json()
-    response_dict[STATUS] = "true"
+    response_dict[STATUS] = "success"
     response_dict["content"] = content
     js_dump = json.dumps(response_dict)
     resp = Response(js_dump, status=200, mimetype='application/json')
@@ -36,7 +36,7 @@ def get():
 def post():
     response_dict = {}
     content = request.get_json()
-    response_dict[STATUS] = "true"
+    response_dict[STATUS] = "success"
     response_dict["content"] = content
     js_dump = json.dumps(response_dict)
     resp = Response(js_dump, status=200, mimetype='application/json')
@@ -58,7 +58,7 @@ def inserisci_pattuglia():
     targa = content['targa_veicolo']
     try:
         db.insert_turno_pattuglia(inizio_turno, fine_turno, data, targa, primo_militare, secondo_militare)
-        response_dict[STATUS] = "true"
+        response_dict[STATUS] = "success"
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
     except Exception as e:
@@ -84,7 +84,7 @@ def inserisci_militare():
     print(content)
     try:
         db.insert_militare(matricola, nome, cognome, grado)
-        response_dict[STATUS] = "true"
+        response_dict[STATUS] = "success"
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
     except Exception as e:
@@ -103,7 +103,7 @@ def get_lista_personale():
     response_dict = {}
     try:
         lista_personale = db.fetch_personale()
-        response_dict[STATUS] = "true"
+        response_dict[STATUS] = "success"
         response_dict["lista_personale"] = lista_personale
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
@@ -127,7 +127,7 @@ def get_lista_disponibili():
     giorno = content['giorno']
     try:
         lista_disponibili = db.fetch_disponibili(giorno)
-        response_dict[STATUS] = "true"
+        response_dict[STATUS] = "success"
         response_dict["lista_disponibili"] = lista_disponibili
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
