@@ -141,7 +141,7 @@ def get_lista_disponibili():
     return resp
 
 
-@app.route("/getInfoGiorno", methods=["GET"])
+@app.route("/getInfoGiorno", methods=["GET", "POST"])
 def get_info_giorno():
     response_dict = {}
     content = request.get_json()
@@ -162,7 +162,7 @@ def get_info_giorno():
     return resp
 
 
-@app.route("/getInfoMese", methods=["GET"])
+@app.route("/getInfoMese", methods=["GET", "POST"])
 def get_info_mese():
     response_dict = {}
     content = request.get_json()
@@ -183,7 +183,7 @@ def get_info_mese():
     return resp
 
 
-@app.route("/getPattuglieTurno", methods=["GET"])
+@app.route("/getPattuglieTurno", methods=["GET", "POST"])
 def get_pattuglie_turno():
     response_dict = {}
     content = request.get_json()
