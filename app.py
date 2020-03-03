@@ -188,7 +188,7 @@ def get_pattuglie_turno():
     response_dict = {}
     content = request.get_json()
     giorno = content["giorno"]
-    ora_inizio = content["ora_inizio"]
+    ora_inizio = content["inizio_turno"]
     try:
         pattuglie_turno = db.fetch_pattuglie_turno(giorno, ora_inizio)
         response_dict[STATUS] = "success"
