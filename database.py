@@ -77,6 +77,15 @@ class Database:
     #    def update(self, id, nome, cognome, grado):
     #        )
 
+    def fetch_pattuglie_turno(self, giorno, ora_inizio):
+        self.cur.execute(
+            "SELECT matricola_militare, targa_veicolo from TurnoDiPattuglia where giorno=? and inizio_turno=?",
+            (giorno, ora_inizio,))
+        rows = self.cur.fetchall()
+        lista_pattuglie_turno = []
+        for row in rows:
+            row["matricola_militare"]
+
     def __del__(self):
         self.conn.close()
 

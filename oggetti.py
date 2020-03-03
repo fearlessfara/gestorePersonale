@@ -6,17 +6,23 @@ class Militare:
         self.grado = grado
 
 
-class TurnoDiPattuglia:
-    def __init__(self, matricola_militare, inizio_turno, fine_turno, data, targa_veicolo):
-        self.matricola_militare = matricola_militare
-        self.inizio_turno = inizio_turno
-        self.fine_turno = fine_turno
-        self.data = data
-        self.targaa_veicolo = targa_veicolo
-
-
 class Veicolo:
     def __init__(self, targa, marca, modello):
         self.targa = targa
         self.marca = marca
         self.modello = modello
+
+
+class Pattuglia:
+    def __init__(self, primo_militare, secondo_militare, targa_veicolo):
+        self.targaa_veicolo = targa_veicolo
+        self.primo_militare = primo_militare
+        self.secondo_militare = secondo_militare
+
+
+class TurnoDiPattuglia:
+    def __init__(self, data, inizio_turno, fine_turno, pattuglia):
+        self.inizio_turno = inizio_turno
+        self.fine_turno = fine_turno
+        self.data = data
+        self.pattuglia = pattuglia

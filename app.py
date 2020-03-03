@@ -117,5 +117,13 @@ def get_lista_disponibili():
     return resp
 
 
+@app.route("/getPattuglieTurno", methods=["GET"])
+def get_pattuglie_turno():
+    response_dict = {}
+    content = request.get_json()
+    giorno = content["giorno"]
+    ora_inizio = content["ora_inizio"]
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
