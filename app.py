@@ -20,6 +20,7 @@ STATUS = "STATUS"
 def home():
     return render_template("index.html")
 
+
 @app.route('/get', methods=['GET'])
 def get():
     response_dict = {}
@@ -126,6 +127,18 @@ def get_pattuglie_turno():
     content = request.get_json()
     giorno = content["giorno"]
     ora_inizio = content["ora_inizio"]
+    try:
+        pattuglie_turno = db.fetch_pattuglie_turno(giorno, ora_inizio)
+        response_dict[STATUS] = "true"
+        response_dict["pattuglie_turno"] = pattuglie_turno
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
+    except:
+        response_dict = {'error': 'error occured on server side. Please try again'}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+    return resp
 
 
 if __name__ == '__main__':

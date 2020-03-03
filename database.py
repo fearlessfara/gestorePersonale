@@ -1,5 +1,7 @@
 import sqlite3
 
+from oggetti import *
+
 
 class Database:
     def __init__(self, db):
@@ -79,12 +81,31 @@ class Database:
 
     def fetch_pattuglie_turno(self, giorno, ora_inizio):
         self.cur.execute(
-            "SELECT matricola_militare, targa_veicolo from TurnoDiPattuglia where giorno=? and inizio_turno=?",
+            "SELECT targa_veicolo from TurnoDiPattuglia where giorno=? and inizio_turno=?",
             (giorno, ora_inizio,))
         rows = self.cur.fetchall()
         lista_pattuglie_turno = []
+
         for row in rows:
-            row["matricola_militare"]
+            targa = row[0]
+            self.cur.execute(
+                "SELECT matricola, nome, cognome, grado from  Militare as M join TurnoDiPattuglia as TDP on "
+                "M.matricola=TDP.matricola_militare where TDP.giorno=? and inizio_turno=? and targa_veicolo=?",
+                (giorno, ora_inizio, targa))
+            pattuglia_result = self.cur.fetchall()
+            militari_pattuglia = []
+            for militare in pattuglia_result:
+                militare = {
+                    "matricola": militare["matricola"],
+                    "nome": militare["nome"],
+                    "cognome": militare["cognome"],
+                    "grado": militare["grado"],
+                }
+                militari_pattuglia.append(militare)
+
+            pattuglia = Pattuglia(militari_pattuglia[0], militari_pattuglia[1], targa)
+            lista_pattuglie_turno.append(pattuglia)
+        return lista_pattuglie_turno
 
     def __del__(self):
         self.conn.close()
