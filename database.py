@@ -31,7 +31,8 @@ class Database:
                 'matricola': row[0],
                 'nome': row[1],
                 'cognome': row[2],
-                'grado': row[3]
+                'grado': row[3],
+                "busy": "no"
             }
             lista_disponibili.append(militare)
         return lista_disponibili
@@ -116,6 +117,19 @@ class Database:
             militare = Militare(row[0], row[1], row[2], row[3]).to_dictionary()
             lista_militari.append(militare)
         return lista_militari
+
+    def fetch_info_giorno(self, giorno):
+        self.cur.execute("select matricola_militare from Riposo where giorno=? union (SELECT matricola_militare from "
+                         "TurnoDiPattuglia where giorno=?) union (select matricola_militare from Licenza where "
+                         "giorno=?) union (select matricola_militare from Altro where giorno=?) group by "
+                         "matricola_militare", (giorno, giorno, giorno, giorno,))
+        rows = self.cur.fetchall()
+        militari_impegnati = []
+        for row in rows:
+            militare = Militare(row[0], row[1], row[2], row[3]).to_dictionary()
+            militare["busy"] = "yes"
+            militari_impegnati.append(militare)
+        return militari_impegnati.append(self.fetch_disponibili(giorno))
 
     def __del__(self):
         self.conn.close()
