@@ -1,12 +1,15 @@
 import json
 
 from flask import Flask, request, Response, render_template
+from flask_cors import CORS
 
 import database
 
 db = database.Database("store.db")
 
 app = Flask(__name__)
+
+CORS(app)
 
 # definizione delle costanti
 
