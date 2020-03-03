@@ -75,7 +75,7 @@ class Database:
     def fetch_veicolo(self, targa):
         self.cur.execute("select * from Veicolo where targa=?", (targa,))
         row = self.cur.fetchone()
-        veicolo = Veicolo(row["targa"], row["marca"], row["modello"])
+        veicolo = Veicolo(row[0], row[1], row[1])
         return veicolo
 
     def remove_veicolo(self, targa):
@@ -101,7 +101,7 @@ class Database:
             pattuglia_result = self.cur.fetchall()
             militari_pattuglia = []
             for militare in pattuglia_result:
-                militare = Militare(militare["matricola"], militare["nome"], militare["cognome"], militare["grado"])
+                militare = Militare(militare[0], militare[1], militare[2], militare[3])
                 militari_pattuglia.append(militare)
             pattuglia = Pattuglia(militari_pattuglia[0], militari_pattuglia[1],
                                   self.fetch_veicolo(targa)).to_dictionary()
@@ -113,7 +113,7 @@ class Database:
         rows = self.cur.fetchall()
         lista_militari = []
         for row in rows:
-            militare = Militare(row["matricola"], row["nome"], row["cognome"], row["grado"]).to_dictionary()
+            militare = Militare(row[0], row[1], row[2], row[3]).to_dictionary()
             lista_militari.append(militare)
         return lista_militari
 
