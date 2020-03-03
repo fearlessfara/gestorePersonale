@@ -129,16 +129,13 @@ class Database:
             militare = Militare(row[0], row[1], row[2], row[3]).to_dictionary()
             militare["busy"] = "yes"
             militari_impegnati.append(militare)
-        return militari_impegnati.append(self.fetch_disponibili(giorno))
+        return militari_impegnati + self.fetch_disponibili(giorno)
 
     def __del__(self):
         self.conn.close()
 
 # db = Database('store.db')
 # db.insert_militare("12345678", "John Doe", "Microcenter", "pfc")
-# db.insert("Asus Mobo", "Mike Henry", "Microcenter", "360")
-# db.insert("500w PSU", "Karen Johnson", "Newegg", "80")
-# db.insert("2GB DDR4 Ram", "Karen Johnson", "Newegg", "70")
-# db.insert("24 inch Samsung Monitor", "Sam Smith", "Best Buy", "180")
-# db.insert("NVIDIA RTX 2080", "Albert Kingston", "Newegg", "679")
-# db.insert("600w Corsair PSU", "Karen Johnson", "Newegg", "130")
+# db.insert_militare("634552", "Peppo", "Asap", "pfc")
+# db.insert_militare("3423", "Christian", "Faraone", "pfc")
+# db.insert_militare("64563456", "Alfredo", "Mariuolo", "pfc")
