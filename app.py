@@ -89,11 +89,6 @@ def inserisci_militare():
     js_dump = json.dumps(response_dict)
     resp = Response(js_dump, status=200, mimetype='application/json')
 
-    response_dict = {'error': 'error occured on server side. Please try again'}
-    js_dump = json.dumps(response_dict)
-    resp = Response(js_dump, status=500,
-                    mimetype='application/json')
-
     return resp
 
 
