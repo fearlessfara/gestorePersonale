@@ -13,6 +13,28 @@ app = Flask(__name__)
 STATUS = "STATUS"
 
 
+@app.route('/get', methods=['GET'])
+def get():
+    response_dict = {}
+    content = request.get_json()
+    response_dict[STATUS] = "true"
+    response_dict["content"] = content
+    js_dump = json.dumps(response_dict)
+    resp = Response(js_dump, status=200, mimetype='application/json')
+    return resp
+
+
+@app.route('/post', methods=['POST'])
+def post():
+    response_dict = {}
+    content = request.get_json()
+    response_dict[STATUS] = "true"
+    response_dict["content"] = content
+    js_dump = json.dumps(response_dict)
+    resp = Response(js_dump, status=200, mimetype='application/json')
+    return resp
+
+
 @app.route('/inserisciPattuglia', methods=['POST'])
 def inserisci_pattuglia():
     # la pattuglia è composta da due militari ed un veicolo, per comodità passiamo le matricole dei 2 mlitari
