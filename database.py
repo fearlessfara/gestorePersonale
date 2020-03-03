@@ -131,6 +131,13 @@ class Database:
             militari_impegnati.append(militare)
         return militari_impegnati + self.fetch_disponibili(giorno)
 
+    def fetch_info_mese(self, giorno):
+        data = giorno.split("-")
+        mese = data[1]
+        anno = data[2]
+        self.cur.execute("SELECT giorno FROM TurnoDiPattuglia WHERE giorno is like %-?-?", (mese, anno,))
+        self.cur.fetchall()
+
     def __del__(self):
         self.conn.close()
 
