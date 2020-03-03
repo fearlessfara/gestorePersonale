@@ -72,6 +72,12 @@ class Database:
         self.cur.execute("INSERT INTO Veicolo VALUES (?, ?, ?)", (targa, marca, modello))
         self.conn.commit()
 
+    def fetch_veicolo(self, targa):
+        self.cur.execute("select * from Veicolo where targa=?", (targa,))
+        row = self.cur.fetchone()
+        veicolo = Veicolo(row["targa"], row["marca"], row["modello"])
+        return veicolo
+
     def remove_veicolo(self, targa):
         self.cur.execute("DELETE FROM Veicolo WHERE targa=?", (targa,))
         self.conn.commit()
@@ -95,15 +101,11 @@ class Database:
             pattuglia_result = self.cur.fetchall()
             militari_pattuglia = []
             for militare in pattuglia_result:
-                militare = {
-                    "matricola": militare["matricola"],
-                    "nome": militare["nome"],
-                    "cognome": militare["cognome"],
-                    "grado": militare["grado"],
-                }
+                militare = Militare(militare["matricola"], militare["nome"], militare["cognome"], militare["grado"])
                 militari_pattuglia.append(militare)
 
-            pattuglia = Pattuglia(militari_pattuglia[0], militari_pattuglia[1], targa)
+            pattuglia = Pattuglia(militari_pattuglia[0], militari_pattuglia[1],
+                                  self.fetch_veicolo(targa)).to_dictionary()
             lista_pattuglie_turno.append(pattuglia)
         return lista_pattuglie_turno
 
