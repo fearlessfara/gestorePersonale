@@ -1,21 +1,12 @@
 import json
 
-from flask import Flask, render_template, request
+from flask import Flask, request
+
 import database
 
 db = database.Database("store.db")
 db.fetch_disponibili("02-03-2020")
 app = Flask(__name__)
-
-
-@app.route('/')
-def main():
-    return render_template('index.html')
-
-
-@app.route('/showSignUp')
-def showSignUp():
-    return render_template('signup.html')
 
 
 @app.route('/inserisciPattuglia', methods=['POST'])
