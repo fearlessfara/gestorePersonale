@@ -83,17 +83,16 @@ def inserisci_militare():
     cognome = content['cognome']
     grado = content['grado']
     print(content)
-    try:
-        db.insert_militare(matricola, nome, cognome, grado)
-        response_dict[STATUS] = "true"
-        js_dump = json.dumps(response_dict)
-        resp = Response(js_dump, status=200, mimetype='application/json')
-    except Exception as e:
-        print(e)
-        response_dict = {'error': 'error occured on server side. Please try again'}
-        js_dump = json.dumps(response_dict)
-        resp = Response(js_dump, status=500,
-                        mimetype='application/json')
+
+    db.insert_militare(matricola, nome, cognome, grado)
+    response_dict[STATUS] = "true"
+    js_dump = json.dumps(response_dict)
+    resp = Response(js_dump, status=200, mimetype='application/json')
+
+    response_dict = {'error': 'error occured on server side. Please try again'}
+    js_dump = json.dumps(response_dict)
+    resp = Response(js_dump, status=500,
+                    mimetype='application/json')
 
     return resp
 
