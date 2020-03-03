@@ -100,6 +100,7 @@ def inserisci_militare():
 
 @app.route("/getListaPersonale", methods=["GET"])
 def get_lista_personale():
+    # ritorna la lista con tutti i militari presenti nel database
     response_dict = {}
     try:
         lista_personale = db.fetch_personale()
