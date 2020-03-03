@@ -101,6 +101,19 @@ def inserisci_militare():
 @app.route("/getListaPersonale", methods=["GET"])
 def get_lista_personale():
     response_dict = {}
+    try:
+        lista_personale = db.fetch_personale()
+        response_dict[STATUS] = "true"
+        response_dict["lista_personale"] = lista_personale
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
+    except:
+        response_dict = {'error': 'error occured on server side. Please try again'}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+
+    return resp
 
 
 @app.route('/getListaDisponibili', methods=['GET', 'POST'])

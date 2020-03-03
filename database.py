@@ -108,6 +108,15 @@ class Database:
             lista_pattuglie_turno.append(pattuglia)
         return lista_pattuglie_turno
 
+    def fetch_personale(self):
+        self.cur.execute("SELECT * FROM Militare")
+        rows = self.cur.fetchall()
+        lista_militari = []
+        for row in rows:
+            militare = Militare(row["matricola"], row["nome"], row["cognome"], row["grado"]).to_dictionary()
+            lista_militari.append(militare)
+        return lista_militari
+
     def __del__(self):
         self.conn.close()
 
