@@ -20,12 +20,12 @@ def inserisci_pattuglia():
 
     response_dict = {}
     content = request.get_json()
-    inizio_turno = content['inizioTurno']
+    inizio_turno = content['inizio_turno']
     fine_turno = content['fineTurno']
     data = content['dataTurno']
-    primo_militare = content['primoMilitare']
-    secondo_militare = content['secondoMilitare']
-    targa = content['targaVeicolo']
+    primo_militare = content['primo_militare']
+    secondo_militare = content['secondo_militare']
+    targa = content['targa_veicolo']
     try:
         db.insert_turno_pattuglia(inizio_turno, fine_turno, data, targa, primo_militare, secondo_militare)
         response_dict[STATUS] = "true"
