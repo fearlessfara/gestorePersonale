@@ -67,7 +67,6 @@ def inserisci_militare():
     return resp
 
 
-
 @app.route('/getListaDisponibili', methods=['GET', 'POST'])
 def get_lista_disponibili():
     # passando il giorno come parametro viene restituita la lista dei militari disponibili, cioè non impegnati in
