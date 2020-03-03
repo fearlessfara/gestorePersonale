@@ -119,9 +119,9 @@ class Database:
         return lista_militari
 
     def fetch_info_giorno(self, giorno):
-        self.cur.execute("select matricola_militare from Riposo where giorno=? union (SELECT matricola_militare from "
-                         "TurnoDiPattuglia where giorno=?) union (select matricola_militare from Licenza where "
-                         "giorno=?) union (select matricola_militare from Altro where giorno=?) group by "
+        self.cur.execute("select matricola_militare from Riposo where giorno=? union SELECT matricola_militare from "
+                         "TurnoDiPattuglia where giorno=? union select matricola_militare from Licenza where "
+                         "giorno=? union select matricola_militare from Altro where giorno=? group by "
                          "matricola_militare", (giorno, giorno, giorno, giorno,))
         rows = self.cur.fetchall()
         militari_impegnati = []
