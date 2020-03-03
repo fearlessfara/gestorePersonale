@@ -169,7 +169,7 @@ def get_info_mese():
     giorno = content["giorno"]
     try:
         response_dict[STATUS] = "success"
-        response_dict["giorni_completati"] = db.fetch_info_mese(giorno)
+        response_dict["giorni_inseriti"] = db.fetch_info_mese(giorno)
         response_dict["giorno"] = giorno
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
