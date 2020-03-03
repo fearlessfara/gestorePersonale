@@ -13,10 +13,11 @@ app = Flask(__name__)
 STATUS = "STATUS"
 
 
-# la pattuglia è composta da due militari ed un veicolo, per comodità passiamo le matricole dei 2 mlitari
-# è una soluzione molto hard coded ma attualmente va bene così com'è
 @app.route('/inserisciPattuglia', methods=['POST'])
 def inserisci_pattuglia():
+    # la pattuglia è composta da due militari ed un veicolo, per comodità passiamo le matricole dei 2 mlitari
+    # è una soluzione molto hard coded ma attualmente va bene così com'è
+
     response_dict = {}
     content = request.get_json()
     inizio_turno = content['inizioTurno']
@@ -42,13 +43,16 @@ def inserisci_pattuglia():
 
 @app.route('/inserisciMilitare', methods=['POST'])
 def inserisci_militare():
-    response_dict = {}
+    # endpoint per l'inserimento di un militare nel db
+    # i parametri necessari sono matricola, nome, cognome e grado
 
+    response_dict = {}
     content = request.get_json()
     matricola = content['matricola']
     nome = request['nome']
     cognome = request['cognome']
     grado = request['grado']
+
     try:
         db.insert_militare(matricola, nome, cognome, grado)
         response_dict[STATUS] = "true"
@@ -63,10 +67,12 @@ def inserisci_militare():
     return resp
 
 
-# passando il giorno come parametro viene restituita la lista dei militari disponibili, cioè non impegnati in
-# servizi, licenze, risposi o altro
+
 @app.route('/getListaDisponibili', methods=['GET', 'POST'])
 def get_lista_disponibili():
+    # passando il giorno come parametro viene restituita la lista dei militari disponibili, cioè non impegnati in
+    # servizi, licenze, risposi o altro
+
     response_dict = {}
     content = request.get_json()
     print(content)
