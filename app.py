@@ -97,7 +97,7 @@ def inserisci_militare():
     return resp
 
 
-@app.route("/getListaPersonale", methods=["GET"])
+@app.route("/getListaPersonale", methods=["GET", "POST"])
 def get_lista_personale():
     # ritorna la lista con tutti i militari presenti nel database
     response_dict = {}
