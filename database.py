@@ -135,7 +135,7 @@ class Database:
         data = giorno.split("-")
         mese = data[1]
         anno = data[2]
-        self.cur.execute("SELECT giorno FROM TurnoDiPattuglia WHERE month(giorno) is like month(?)", (mese,))
+        self.cur.execute("SELECT giorno FROM TurnoDiPattuglia WHERE month(giorno) = month(?)", (mese,))
         giorni_caricati = self.cur.fetchall()
         lista_giorni_mese = []
         for data in giorni_caricati:
