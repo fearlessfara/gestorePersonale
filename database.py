@@ -135,8 +135,16 @@ class Database:
         data = giorno.split("-")
         mese = data[1]
         anno = data[2]
-        self.cur.execute("SELECT giorno FROM TurnoDiPattuglia WHERE giorno is like %-?-?", (mese, anno,))
-        self.cur.fetchall()
+        self.cur.execute("SELECT giorno FROM TurnoDiPattuglia WHERE month(giorno) is like month(?)", (mese,))
+        giorni_caricati = self.cur.fetchall()
+        lista_giorni_mese = []
+        for data in giorni_caricati:
+            dict_giorno = {
+                "giorno": data,
+                "yet_scheduled": "true"
+            }
+            lista_giorni_mese.append(dict_giorno)
+        return lista_giorni_mese
 
     def __del__(self):
         self.conn.close()
