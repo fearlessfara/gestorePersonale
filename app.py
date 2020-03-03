@@ -82,7 +82,7 @@ def inserisci_militare():
     nome = content['nome']
     cognome = content['cognome']
     grado = content['grado']
-
+    print(content)
     try:
         db.insert_militare(matricola, nome, cognome, grado)
         response_dict[STATUS] = "true"
