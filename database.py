@@ -103,7 +103,6 @@ class Database:
             for militare in pattuglia_result:
                 militare = Militare(militare["matricola"], militare["nome"], militare["cognome"], militare["grado"])
                 militari_pattuglia.append(militare)
-
             pattuglia = Pattuglia(militari_pattuglia[0], militari_pattuglia[1],
                                   self.fetch_veicolo(targa)).to_dictionary()
             lista_pattuglie_turno.append(pattuglia)
