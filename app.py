@@ -15,8 +15,6 @@ STATUS = "STATUS"
 
 # la pattuglia è composta da due militari ed un veicolo, per comodità passiamo le matricole dei 2 mlitari
 # è una soluzione molto hard coded ma attualmente va bene così com'è
-
-
 @app.route('/inserisciPattuglia', methods=['POST'])
 def inserisci_pattuglia():
     response_dict = {}
@@ -65,16 +63,27 @@ def inserisci_militare():
     return resp
 
 
+# passando il giorno come parametro viene restituita la lista dei militari disponibili, cioè non impegnati in
+# servizi, licenze, risposi o altro
 @app.route('/getListaDisponibili', methods=['GET', 'POST'])
 def get_lista_disponibili():
+    response_dict = {}
     content = request.get_json()
     print(content)
     giorno = content['giorno']
     try:
         lista_disponibili = db.fetch_disponibili(giorno)
-        return json.dumps(lista_disponibili)
+        response_dict[STATUS] = "true"
+        response_dict["lista_disponibili"] = lista_disponibili
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
     except:
-        return json.dumps({'status': 'error'})
+        response_dict = {'error': 'error occured on server side. Please try again'}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+
+    return resp
 
 
 if __name__ == '__main__':
