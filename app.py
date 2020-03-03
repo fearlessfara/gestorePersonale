@@ -79,9 +79,9 @@ def inserisci_militare():
     response_dict = {}
     content = request.get_json()
     matricola = content['matricola']
-    nome = request['nome']
-    cognome = request['cognome']
-    grado = request['grado']
+    nome = content['nome']
+    cognome = content['cognome']
+    grado = content['grado']
 
     try:
         db.insert_militare(matricola, nome, cognome, grado)
