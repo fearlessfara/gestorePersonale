@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, request
+from flask import Flask, request, Response
 
 import database
 
@@ -8,32 +8,61 @@ db = database.Database("store.db")
 
 app = Flask(__name__)
 
+# definizione delle costanti
+
+STATUS = "STATUS"
+
 
 # la pattuglia è composta da due militari ed un veicolo, per comodità passiamo le matricole dei 2 mlitari
 # è una soluzione molto hard coded ma attualmente va bene così com'è
+
+
 @app.route('/inserisciPattuglia', methods=['POST'])
 def inserisci_pattuglia():
-    # read the posted values from the UI
+    response_dict = {}
     content = request.get_json()
-    inizioTurno = content['inizioTurno']
-    fineTurno = content['fineTurno']
+    inizio_turno = content['inizioTurno']
+    fine_turno = content['fineTurno']
     data = content['dataTurno']
-    primoMilitare = content['primoMilitare']
-    secondoMilitare = content['secondoMilitare']
+    primo_militare = content['primoMilitare']
+    secondo_militare = content['secondoMilitare']
     targa = content['targaVeicolo']
-    db.insert_turno_pattuglia(inizioTurno, fineTurno, data, targa, primoMilitare, secondoMilitare)
-    return json.dumps({'status': 'executed'})
+    try:
+        db.insert_turno_pattuglia(inizio_turno, fine_turno, data, targa, primo_militare, secondo_militare)
+        response_dict[STATUS] = "true"
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
+
+    except:
+        response_dict = {'error': 'error occured on server side. Please try again'}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+
+    return resp
 
 
 @app.route('/inserisciMilitare', methods=['POST'])
 def inserisci_militare():
+    response_dict = {}
+
     content = request.get_json()
     matricola = content['matricola']
     nome = request['nome']
     cognome = request['cognome']
     grado = request['grado']
-    db.insert_militare(matricola, nome, cognome, grado)
-    return json.dumps({'status': 'executed'})
+    try:
+        db.insert_militare(matricola, nome, cognome, grado)
+        response_dict[STATUS] = "true"
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
+    except:
+        response_dict = {'error': 'error occured on server side. Please try again'}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+
+    return resp
 
 
 @app.route('/getListaDisponibili', methods=['GET', 'POST'])
@@ -50,4 +79,3 @@ def get_lista_disponibili():
 
 if __name__ == '__main__':
     app.run()
-
