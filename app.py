@@ -15,7 +15,7 @@ STATUS = "STATUS"
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template()
+    return render_template("index.html")
 
 @app.route('/get', methods=['GET'])
 def get():
