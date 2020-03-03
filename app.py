@@ -5,7 +5,7 @@ from flask import Flask, request
 import database
 
 db = database.Database("store.db")
-db.fetch_disponibili("02-03-2020")
+
 app = Flask(__name__)
 
 
