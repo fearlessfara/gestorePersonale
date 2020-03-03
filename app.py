@@ -9,6 +9,8 @@ db = database.Database("store.db")
 app = Flask(__name__)
 
 
+# la pattuglia è composta da due militari ed un veicolo, per comodità passiamo le matricole dei 2 mlitari
+# è una soluzione molto hard coded ma attualmente va bene così com'è
 @app.route('/inserisciPattuglia', methods=['POST'])
 def inserisci_pattuglia():
     # read the posted values from the UI
