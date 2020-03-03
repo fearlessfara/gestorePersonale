@@ -129,6 +129,7 @@ def get_lista_disponibili():
         lista_disponibili = db.fetch_disponibili(giorno)
         response_dict[STATUS] = "success"
         response_dict["lista_disponibili"] = lista_disponibili
+        response_dict["giorno"] = giorno
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
     except Exception as e:
@@ -148,6 +149,7 @@ def get_info_giorno():
     try:
         response_dict[STATUS] = "success"
         response_dict["info_militari_giorno"] = db.fetch_info_giorno(giorno)
+        response_dict["giorno"] = giorno
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
     except Exception as e:
@@ -168,6 +170,7 @@ def get_info_mese():
     try:
         response_dict[STATUS] = "success"
         response_dict["info_giorni_mese"] = db.fetch_info_mese(giorno)
+        response_dict["giorno"] = giorno
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
     except Exception as e:
@@ -190,6 +193,7 @@ def get_pattuglie_turno():
         pattuglie_turno = db.fetch_pattuglie_turno(giorno, ora_inizio)
         response_dict[STATUS] = "success"
         response_dict["pattuglie_turno"] = pattuglie_turno
+        response_dict["giorno"] = giorno
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
     except Exception as e:
