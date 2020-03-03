@@ -145,6 +145,19 @@ def get_info_giorno():
     response_dict = {}
     content = request.get_json()
     giorno = content["giorno"]
+    try:
+        response_dict[STATUS] = "success"
+        response_dict["info_militari_giorno"] = db.fetch_info_giorno(giorno)
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
+    except Exception as e:
+        response_dict[STATUS] = "error"
+        response_dict = {'error': 'error occured on server side. Please try again', "stacktrace": str(e)}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+
+    return resp
 
 
 @app.route("/getInfoMese", methods=["GET"])
@@ -162,7 +175,7 @@ def get_pattuglie_turno():
     ora_inizio = content["ora_inizio"]
     try:
         pattuglie_turno = db.fetch_pattuglie_turno(giorno, ora_inizio)
-        response_dict[STATUS] = "true"
+        response_dict[STATUS] = "success"
         response_dict["pattuglie_turno"] = pattuglie_turno
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
