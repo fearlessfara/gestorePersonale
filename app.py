@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, request, Response
+from flask import Flask, request, Response, render_template
 
 import database
 
@@ -12,6 +12,10 @@ app = Flask(__name__)
 
 STATUS = "STATUS"
 
+
+@app.route('/', methods=['GET'])
+def home():
+    return render_template()
 
 @app.route('/get', methods=['GET'])
 def get():
