@@ -61,9 +61,8 @@ def inserisci_pattuglia():
         response_dict[STATUS] = "true"
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
-
-    except:
-        response_dict = {'error': 'error occured on server side. Please try again'}
+    except Exception as e:
+        response_dict = {'error': 'error occured on server side. Please try again', "stacktrace": e}
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=500,
                         mimetype='application/json')
@@ -89,8 +88,8 @@ def inserisci_militare():
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
     except Exception as e:
-        print(e)
-        response_dict = {'error': 'error occured on server side. Please try again'}
+        response_dict = {'error': 'error occured on server side. Please try again',
+                         "stacktrace": e}
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=500,
                         mimetype='application/json')
@@ -108,8 +107,9 @@ def get_lista_personale():
         response_dict["lista_personale"] = lista_personale
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
-    except:
-        response_dict = {'error': 'error occured on server side. Please try again'}
+    except Exception as e:
+        response_dict = {'error': 'error occured on server side. Please try again',
+                         "stacktrace": e}
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=500,
                         mimetype='application/json')
@@ -132,8 +132,8 @@ def get_lista_disponibili():
         response_dict["lista_disponibili"] = lista_disponibili
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
-    except:
-        response_dict = {'error': 'error occured on server side. Please try again'}
+    except Exception as e:
+        response_dict = {'error': 'error occured on server side. Please try again', "stacktrace": e}
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=500,
                         mimetype='application/json')
@@ -153,8 +153,8 @@ def get_pattuglie_turno():
         response_dict["pattuglie_turno"] = pattuglie_turno
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
-    except:
-        response_dict = {'error': 'error occured on server side. Please try again'}
+    except Exception as e:
+        response_dict = {'error': 'error occured on server side. Please try again', "stacktrace": e}
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=500,
                         mimetype='application/json')
