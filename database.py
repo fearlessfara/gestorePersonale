@@ -132,18 +132,9 @@ class Database:
         return militari_impegnati + self.fetch_disponibili(giorno)
 
     def fetch_info_mese(self, giorno):
-        data = giorno.split("-")
-        mese = data[1]
-        anno = data[2]
-        # self.cur.execute("SELECT giorno FROM TurnoDiPattuglia WHERE month(giorno) = month(?)", (mese,)) FROM "+
-        # TABLE_ENTRY + " WHERE strftime('%Y',entry_date) = strftime('%Y',date('now')) AND  strftime('%m',entry_date)
-        # = strftime('%m',date('now'))
         self.cur.execute(
-            "SELECT giorno FROM TurnoDiPattuglia WHERE strftime('%Y',giorno) = strftime('%Y',date('?')) AND  "
-            "strftime('%m',giorno) = strftime('%m',date('?'))", (giorno, giorno,))
-        # self.cur.execute(
-        #     "select giorno from TurnoDiPattuglia where strftime('%m', giorno)=strftime('%m', ?) and strftime('%y', "
-        #     "giorno)=strftime('%y', ?)", (mese, anno,))
+            "SELECT giorno FROM TurnoDiPattuglia WHERE strftime('%Y',?) = strftime('%Y',date(giorno)) AND  strftime('%m',?) = strftime('%m',date(giorno))",
+            (giorno, giorno,))
         giorni_caricati = self.cur.fetchall()
         lista_giorni_mese = []
         for data in giorni_caricati:
