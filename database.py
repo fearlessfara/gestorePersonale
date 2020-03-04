@@ -133,13 +133,14 @@ class Database:
 
     def fetch_info_mese(self, giorno):
         self.cur.execute(
-            "SELECT DISTINCT giorno FROM TurnoDiPattuglia WHERE strftime('%Y',?) = strftime('%Y',date(giorno)) AND  strftime('%m',?) = strftime('%m',date(giorno))",
+            "SELECT DISTINCT giorno FROM TurnoDiPattuglia WHERE strftime('%Y',?) = strftime('%Y',date(giorno)) AND  "
+            "strftime('%m',?) = strftime('%m',date(giorno))",
             (giorno, giorno,))
         giorni_caricati = self.cur.fetchall()
         lista_giorni_mese = []
-        for data in giorni_caricati:
+        for data, n in giorni_caricati:
             dict_giorno = {
-                "giorno": data,
+                "giorno": data[n],
                 "yet_scheduled": "true"
             }
             lista_giorni_mese.append(dict_giorno)
