@@ -1,3 +1,5 @@
+__author__ = "Faraone Christian Gennaro"
+
 import json
 
 from flask import Flask, request, Response, render_template
@@ -194,6 +196,24 @@ def get_pattuglie_turno():
         response_dict[STATUS] = "success"
         response_dict["pattuglie_turno"] = pattuglie_turno
         response_dict["giorno"] = giorno
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
+    except Exception as e:
+        response_dict = {'error': 'error occured on server side. Please try again', "stacktrace": str(e)}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+    return resp
+
+
+@app.route("/getTuttiTurni", methods=["GET"])
+def get_tutti_turni():
+    response_dict = {}
+    content = request.get_json()
+    try:
+        turni = db.fetch_all_tdp()
+        response_dict[STATUS] = "success"
+        response_dict["turni"] = turni
         js_dump = json.dumps(response_dict)
         resp = Response(js_dump, status=200, mimetype='application/json')
     except Exception as e:
