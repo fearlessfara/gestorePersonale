@@ -11,13 +11,14 @@ class Database:
             "CREATE TABLE IF NOT EXISTS Militare (matricola integer primary key, nome string, cognome string,  "
             "grado string)")
         self.cur.execute("CREATE TABLE IF NOT EXISTS Veicolo (marca string, modello string, targa string);")
-        self.cur.execute("CREATE TABLE  if not exists Riposo (matricola_militare integer, giorno date)")
-        self.cur.execute("CREATE TABLE if not exists Licenza (matricola_militare integer, giorno date);")
-        self.cur.execute("CREATE TABLE if not exists Altro (matricola_militare integer, note text, giorno date);")
-        self.cur.execute("CREATE TABLE if not exists Giornata (giorno date PRIMARY KEY);")
+        self.cur.execute("CREATE TABLE  if not exists Riposo (matricola_militare integer, giorno string)")
+        self.cur.execute("CREATE TABLE if not exists Licenza (matricola_militare integer, giorno string);")
+        self.cur.execute("CREATE TABLE if not exists Altro (matricola_militare integer, note text, giorno string);")
+        self.cur.execute("CREATE TABLE if not exists Giornata (giorno string PRIMARY KEY);")
         self.cur.execute(
-            "CREATE TABLE if not exists TurnoDiPattuglia (id_pattuglia INTEGER PRIMARY KEY AUTOINCREMENT, matricola_militare integer, "
-            "inizio_turno time, fine_turno time, giorno date, targa_veicolo string);")
+            "CREATE TABLE if not exists TurnoDiPattuglia (id_pattuglia INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "matricola_militare integer, inizio_turno string, fine_turno string, giorno string, targa_veicolo "
+            "string);")
         self.conn.commit()
 
     def fetch_disponibili(self, data):

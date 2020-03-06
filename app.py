@@ -143,7 +143,7 @@ def inserisci_militare():
 
     response_dict = {}
     content = request.get_json()
-    matricola = content['matricola']
+    matricola = content['matricola_militare']
     nome = content['nome']
     cognome = content['cognome']
     grado = content['grado']
