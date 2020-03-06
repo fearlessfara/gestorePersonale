@@ -1,5 +1,6 @@
 __author__ = "Faraone Christian Gennaro"
 
+import gc
 import json
 
 from flask import Flask, request, Response, render_template
@@ -70,6 +71,53 @@ def inserisci_pattuglia():
                         mimetype='application/json')
 
     return resp
+
+
+@app.route('/inserisciRiposo', methods=['POST'])
+def inserisci_riposo():
+    response_dict = {}
+    content = request.get_json()
+    data = content['giorno']
+    matricola = content['matricola_militare']
+
+    try:
+        db.insert_riposo(data, matricola)
+        response_dict[STATUS] = "success"
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
+    except Exception as e:
+        response_dict = {'error': 'error occured on server side. Please try again', "stacktrace": str(e)}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+
+    return resp
+
+
+@app.route('/inserisciLicenza', methods=['POST'])
+def inserisci_licenza():
+    response_dict = {}
+    content = request.get_json()
+    data = content['giorno']
+    matricola = content['matricola_militare']
+
+    try:
+        db.insert_licenza(data, matricola)
+        response_dict[STATUS] = "success"
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
+    except Exception as e:
+        response_dict = {'error': 'error occured on server side. Please try again', "stacktrace": str(e)}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+
+    return resp
+
+
+@app.route('inserisciAltroServizio', methods=['POST'])
+def inserisci_altro_servizio():
+    print("altro")
 
 
 @app.route('/inserisciMilitare', methods=['POST'])
@@ -225,4 +273,5 @@ def get_tutti_turni():
 
 
 if __name__ == '__main__':
+    gc.enable()
     app.run(host='0.0.0.0', port=80)

@@ -162,6 +162,17 @@ class Database:
             turni.append(turno)
         return turni
 
+    def insert_riposo(self, data, matricola):
+        self.cur.execute("INSERT INTO Riposo VALUES(?,?)", (matricola, data,))
+        self.conn.commit()
+
+    def insert_licenza(self, data, matricola):
+        self.cur.execute("INSERT INTO Licenza VALUES(?,?)", (matricola, data,))
+        self.conn.commit()
+
+    def insert_altro_servizio(self, data, matricola, note):
+        self.cur.execute("INSERT INTO Altro VALUES(?,?,?)", (matricola, note, data))
+
     def __del__(self):
         self.conn.close()
 
