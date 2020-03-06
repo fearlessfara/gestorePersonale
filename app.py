@@ -115,7 +115,7 @@ def inserisci_licenza():
     return resp
 
 
-@app.route('inserisciAltroServizio', methods=['POST'])
+@app.route('/inserisciAltroServizio', methods=['POST'])
 def inserisci_altro_servizio():
     response_dict = {}
     content = request.get_json()
