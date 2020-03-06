@@ -117,7 +117,23 @@ def inserisci_licenza():
 
 @app.route('inserisciAltroServizio', methods=['POST'])
 def inserisci_altro_servizio():
-    print("altro")
+    response_dict = {}
+    content = request.get_json()
+    data = content['giorno']
+    matricola = content['matricola_militare']
+    note = content['note']
+    try:
+        db.insert_altro(data, matricola, note)
+        response_dict[STATUS] = "success"
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=200, mimetype='application/json')
+    except Exception as e:
+        response_dict = {'error': 'error occured on server side. Please try again', "stacktrace": str(e)}
+        js_dump = json.dumps(response_dict)
+        resp = Response(js_dump, status=500,
+                        mimetype='application/json')
+
+    return resp
 
 
 @app.route('/inserisciMilitare', methods=['POST'])
